@@ -13,9 +13,12 @@ InstrumentDetail.prototype.bindEvents = function () {
 };
 
 InstrumentDetail.prototype.render = function(family){
+  const header = document.createElement('h1')
   const infoParagraph = document.createElement('p');
+  header.textContent = `${family.name}`
   infoParagraph.textContent = `${family.description}`;
   this.container.innerHTML = '';
+  this.container.appendChild(header);
   this.container.appendChild(infoParagraph);
 };
 
