@@ -5,23 +5,23 @@ const SelectView = function (element) {
 };
 
 SelectView.prototype.bindEvents = function () {
-  PubSub.subscribe('InstrumentFamilies:all-instruments-ready', (event) => {
+  PubSub.subscribe('InstrumentFamilies:all-instruments', (event) => {
     const allInstruments = event.detail;
     this.populate(allInstruments);
-  })
+  });
   this.element.addEventListener('change', (event) => {
   const selectedIndex = event.target.value;
   PubSub.publish('SelectView:change', selectedIndex);
   });
 };
 
-SelectView.prototype.populate = function(instrumentsData){
-  animalsData.forEach((instrument, index) => {
+SelectView.prototype.populate = function (instrumentsData){
+  instrumentsData.forEach((instrument, index) => {
     const option = document.createElement('option');
     option.textContent = instrument.name;
     option.value = index;
     this.element.appendChild(option);
   })
-}
+};
 
 module.exports = SelectView;

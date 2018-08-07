@@ -1,20 +1,22 @@
 const PubSub = require ('../helpers/pub_sub.js');
 
-const InstrumentDetailView = function (container) {
+const InstrumentDetail = function (container) {
     this.container = container;
 }
 
-InstrumentDetailView.prototype.bindEvents = function () {
-  PubSub.subscribe('InstrumentFamilies:selected-instrument-ready');
-  const instrument = event.detail;
-  this.render(instrument);
+InstrumentDetail.prototype.bindEvents = function () {
+  PubSub.subscribe('InstrumentFamilies:selected-instrument', (event) =>{
+    const family = event.detail;
+    this.render(family);
+  });
+
 };
 
-InstrumentDetailView.prototype.render = function(instrument){
+InstrumentDetail.prototype.render = function(family){
   const infoParagraph = document.createElement('p');
-  infoParagraph.textContent = `${instrument.name}: ${instrument.description}`;
+  infoParagraph.textContent = `${family.description}`;
   this.container.innerHTML = '';
   this.container.appendChild(infoParagraph);
 };
 
-module.exports = InstrumentDetailView
+module.exports = InstrumentDetail;
