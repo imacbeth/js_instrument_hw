@@ -30,4 +30,18 @@ const InstrumentFamilies = function() {
   ];
 };
 
+InstrumentFamilies.prototype.bindEvents = function () {
+  PubSub.publish('InstrumentFamilies:all-instruments-ready', this.instrumentFamilies);
+
+  PubSub.subscribe('SelectView:change', (event) => {
+    const selectedIndex = event.detail;
+    this.publishInstrumentDetail(selectedIndex);
+  });
+};
+
+InstrumentFamilies.prototype.publishInstrumentDetail = function(instrumentIndex){
+  const selectedInstrument = this.instrumentFamilies[instrumentIndex];
+  PubSub.publish('InstrumentFamilies:selected-animal-ready', selectedInstrument)
+};
+
 module.exports = InstrumentFamilies;
